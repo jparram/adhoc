@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AxiosInstance } from 'axios';
 import { AxiosProviderService } from '../axios-provider-service/axios-provider-service.service';
-import { CreateRole, Role } from '../models/role.interface';
+import { CreateRole, Role, UpdateRole } from '../models/role.interface';
 import { AddUsersToRole } from '../models/add-users-to-role.interface';
 
 @Injectable()
@@ -25,6 +25,11 @@ export class OktaRolesService {
 
     async deleteRole(id: string): Promise<any> {
         const response = await this.axiosInstance.delete(`/roles/${id}`);
+        return response.data;
+    }
+
+    async updateRole(id: string, roleToUpdate: UpdateRole): Promise<Role> {
+        const response = await this.axiosInstance.patch(`/roles/${id}`, roleToUpdate);
         return response.data;
     }
 

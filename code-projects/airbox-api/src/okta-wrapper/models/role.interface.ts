@@ -7,3 +7,9 @@ export interface Role {
 }
 
 export interface CreateRole extends Role { }
+
+export class UpdateRole implements Role {
+  id?: string;
+  name: string;
+  description?: string;
+}

@@ -1,5 +1,5 @@
-import { Controller, Post, Body, Get, Delete, Param, Query } from '@nestjs/common';
-import { CreateRole, Role } from 'src/okta-wrapper/models/role.interface';
+import { Controller, Post, Body, Get, Delete, Param, Query, Patch } from '@nestjs/common';
+import { CreateRole, Role, UpdateRole } from 'src/okta-wrapper/models/role.interface';
 import { UserService } from '../user.service';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { OktaRolesService } from 'src/okta-wrapper/okta-roles/okta-roles.service';
@@ -31,6 +31,14 @@ export class RolesController {
     @Delete(':id')
     async deleteRole(@Param('id') id: string): Promise<any> {
         return this.rolesService.deleteRole(id);
+    }
+
+    @ApiOperation({ summary: 'Update an existing role' })
+    @ApiParam({ name: 'id', description: 'ID of the role' })
+    @ApiBody({ type: UpdateRole })
+    @Patch(':id')
+    async updateRole(@Param('id') id: string, @Body() createRoleDto: UpdateRole): Promise<Role> {
+        return this.rolesService.updateRole(id, createRoleDto);
     }
 
     @ApiOperation({ summary: 'Get all roles' })
