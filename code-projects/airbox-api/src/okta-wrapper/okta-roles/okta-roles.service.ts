@@ -18,6 +18,16 @@ export class OktaRolesService {
         return response.data;
     }
 
+    async getRole(id: string): Promise<any> {
+        const response = await this.axiosInstance.get(`/roles/${id}`);
+        return response.data;
+    }
+
+    async deleteRole(id: string): Promise<any> {
+        const response = await this.axiosInstance.delete(`/roles/${id}`);
+        return response.data;
+    }
+
     async getRoles(
         page?: number,
         per_page?: number,

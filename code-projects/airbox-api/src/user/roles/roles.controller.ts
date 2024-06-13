@@ -1,7 +1,7 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Delete, Param, Query } from '@nestjs/common';
 import { CreateRole, Role } from 'src/okta-wrapper/models/role.interface';
 import { UserService } from '../user.service';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { OktaRolesService } from 'src/okta-wrapper/okta-roles/okta-roles.service';
 import { AddUsersToRole } from 'src/okta-wrapper/models/add-users-to-role.interface';
 
@@ -19,10 +19,33 @@ export class RolesController {
         return this.userService.createRole(createRoleDto);
     }
 
+    @ApiOperation({ summary: 'Get a role by ID' })
+    @ApiParam({ name: 'id', description: 'ID of the role' })
+    @Get(':id')
+    async getRole(@Param('id') id: string): Promise<any> {
+        return this.rolesService.getRole(id);
+    }
+
+    @ApiOperation({ summary: 'Delete a role by ID' })
+    @ApiParam({ name: 'id', description: 'ID of the role' })
+    @Delete(':id')
+    async deleteRole(@Param('id') id: string): Promise<any> {
+        return this.rolesService.deleteRole(id);
+    }
+
     @ApiOperation({ summary: 'Get all roles' })
+    @ApiQuery({ name: 'page', required: false })
+    @ApiQuery({ name: 'per_page', required: false })
+    @ApiQuery({ name: 'sort', required: false })
+    @ApiQuery({ name: 'include_totals', required: false, type: Boolean })
     @Get()
-    async getRoles(): Promise<{ roles: Role[], total?: number }> {
-        return this.rolesService.getRoles();
+    async getRoles(
+        @Query('page') page?: number,
+        @Query('per_page') per_page?: number,
+        @Query('sort') sort?: string,
+        @Query('include_totals') include_totals?: boolean
+    ): Promise<{ roles: Role[], total?: number }> {
+        return this.rolesService.getRoles(page, per_page, sort, include_totals);
     }
 
     @ApiOperation({ summary: 'Add users to a role' })
