@@ -11,12 +11,14 @@ export class AxiosProviderService {
         , private configService: ConfigService) {
 
         const oktaDomain = this.configService.get<string>('okta.domain');
+        console.log(oktaDomain);
+        console.log(this.configService.get<string>('okta'));
 
         this.axiosInstance = axios.create({
-          baseURL: `${oktaDomain}/api/v2`,
-          headers: {
-            'Content-Type': 'application/json',
-          },
+            baseURL: `${oktaDomain}/api/v2`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
 
         this.setupInterceptors();
