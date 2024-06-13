@@ -35,7 +35,11 @@ export class OktaRolesService {
     }
 
     async addUsersToRole(roleId: string, addUsersToRole: AddUsersToRole): Promise<any> {
-        const response = await this.axiosInstance.post(`/roles/${roleId}/users`, addUsersToRole);
+        const payload = {
+            users: addUsersToRole.user_ids,
+        };
+        console.log(payload);
+        const response = await this.axiosInstance.post(`/roles/${roleId}/users`, payload);
         return response.data;
     }
 }

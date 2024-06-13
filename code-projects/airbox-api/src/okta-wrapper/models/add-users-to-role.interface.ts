@@ -1,3 +1,3 @@
-export interface AddUsersToRole {
+export class AddUsersToRole {
     user_ids: string[];
 }
