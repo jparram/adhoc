@@ -11,6 +11,8 @@ import { UserModule } from './user/user.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { OktaWrapperModule } from './okta-wrapper/okta-wrapper.module';
 import { OktaUserService } from './okta-wrapper/okta-user/okta-user.service';
+import { SharedModule } from './shared/shared.module';
+import { RoleSyncService } from './role-sync-service/role-sync-service.service';
 
 console.log(process.env)
 
@@ -23,8 +25,9 @@ console.log(process.env)
     }),
     EventEmitterModule.forRoot(),
     UserModule,
-    OktaWrapperModule],
+    OktaWrapperModule,
+    SharedModule],
   controllers: [AppController],
-  providers: [AppService, OktaUserService],
+  providers: [AppService, OktaUserService, RoleSyncService],
 })
 export class AppModule { }

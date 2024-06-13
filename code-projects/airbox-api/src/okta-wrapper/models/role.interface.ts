@@ -1,7 +1,7 @@
 // src/okta-wrapper/models/role.interface.ts
 
 export interface Role {
-  id: string;
+  id?: string;
   name: string;
   description?: string;
 }
