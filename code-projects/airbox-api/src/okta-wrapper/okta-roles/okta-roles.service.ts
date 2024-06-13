@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AxiosInstance } from 'axios';
 import { AxiosProviderService } from '../axios-provider-service/axios-provider-service.service';
 import { CreateRole, Role } from '../models/role.interface';
+import { AddUsersToRole } from '../models/add-users-to-role.interface';
 
 @Injectable()
 export class OktaRolesService {
@@ -30,6 +31,11 @@ export class OktaRolesService {
         if (include_totals !== undefined) params.include_totals = include_totals;
 
         const response = await this.axiosInstance.get('/roles', { params });
+        return response.data;
+    }
+
+    async addUsersToRole(roleId: string, addUsersToRole: AddUsersToRole): Promise<any> {
+        const response = await this.axiosInstance.post(`/roles/${roleId}/users`, addUsersToRole);
         return response.data;
     }
 }

@@ -1,7 +1,4 @@
 import { Module } from '@nestjs/common';
-import * as dotenv from 'dotenv';
-dotenv.config()
-import * as path from 'path';
 
 import { ConfigModule } from '@nestjs/config';
 import configuration from './config/config';
